@@ -1,0 +1,116 @@
+CREATE SCHEMA ALBUMS;
+GO
+
+CREATE TABLE ALBUMS.Title (
+    IdTitle INT IDENTITY(1,1) NOT NULL,
+    AlbumTitle NCHAR(50) NULL,
+    AlbumAcronym NCHAR(10) NOT NULL,
+    CONSTRAINT PK_Title PRIMARY KEY CLUSTERED (IdTitle)
+);
+
+CREATE TABLE ALBUMS.AllSongs (
+    IdSongs INT NOT NULL,
+    IdTitle INT NOT NULL,
+    NumberOfSongs INT NOT NULL,
+    EpOrLp NCHAR(10) NULL,
+    CONSTRAINT PK_AllSongs PRIMARY KEY CLUSTERED (IdSongs),
+    CONSTRAINT FK_AllSongs_Title FOREIGN KEY (IdTitle) REFERENCES ALBUMS.Title(IdTitle)
+);
+
+CREATE TABLE ALBUMS.BandOrSolo (
+    IdBand INT IDENTITY(1,1) NOT NULL,
+    IdTitle INT NOT NULL,
+    BandOrSolo NCHAR(10) NOT NULL,
+    HowManyPeople INT NOT NULL,
+    CONSTRAINT PK_BandOrSolo PRIMARY KEY CLUSTERED (IdBand),
+    CONSTRAINT FK_BandOrSolo_Title FOREIGN KEY (IdTitle) REFERENCES ALBUMS.Title(IdTitle)
+);
+
+CREATE TABLE ALBUMS.Artist (
+    IdArtist INT IDENTITY(1,1) NOT NULL,
+    ArtistName NCHAR(50) NOT NULL,
+    IdBand INT NOT NULL,
+    CONSTRAINT PK_Artist PRIMARY KEY CLUSTERED (IdArtist),
+    CONSTRAINT FK_Artist_BandOrSolo FOREIGN KEY (IdBand) REFERENCES ALBUMS.BandOrSolo(IdBand)
+);
+
+CREATE TABLE ALBUMS.Genre (
+    IdGenre INT NOT NULL,
+    IdTitle INT NOT NULL,
+    Genre NCHAR(50) NULL,
+    PlayedOnPopRadio NCHAR(10) NULL,
+    CONSTRAINT PK_Genre PRIMARY KEY CLUSTERED (IdGenre),
+    CONSTRAINT FK_Genre_Title FOREIGN KEY (IdTitle) REFERENCES ALBUMS.Title(IdTitle)
+);
+
+CREATE TABLE ALBUMS.Ranking (
+    IdRanking INT NOT NULL,
+    Ranking FLOAT NULL,
+    Source NCHAR(50) NULL,
+    IdTitle INT NOT NULL,
+    CONSTRAINT PK_Ranking PRIMARY KEY CLUSTERED (IdRanking),
+    CONSTRAINT FK_Ranking_Title FOREIGN KEY (IdTitle) REFERENCES ALBUMS.Title(IdTitle)
+);
+
+CREATE TABLE ALBUMS.Release (
+    IdRelease INT NOT NULL,
+    IdTitle INT NOT NULL,
+    DateOfRelease DATE NULL,
+    DayOfTheWeek NCHAR(20) NULL,
+    CONSTRAINT PK_Release PRIMARY KEY CLUSTERED (IdRelease),
+    CONSTRAINT FK_Release_Title FOREIGN KEY (IdTitle) REFERENCES ALBUMS.Title(IdTitle)
+);
+
+CREATE TABLE ALBUMS.Tour (
+    IdTour INT NOT NULL,
+    IdTitle INT NOT NULL,
+    TourForTheAlbum NCHAR(10) NOT NULL,
+    WorldwideTour NCHAR(10) NULL,
+    CONSTRAINT PK_Tour PRIMARY KEY CLUSTERED (IdTour),
+    CONSTRAINT FK_Tour_Title FOREIGN KEY (IdTitle) REFERENCES ALBUMS.Title(IdTitle)
+);
+
+CREATE TABLE ALBUMS.WhichAlbum (
+    IdWhichAlbum INT NOT NULL,
+    IdTitle INT NOT NULL,
+    WhichAlbum INT NOT NULL,
+    IsDebut NCHAR(10) NOT NULL,
+    IsSophomore NCHAR(10) NOT NULL,
+    CONSTRAINT PK_WhichAlbum PRIMARY KEY CLUSTERED (IdWhichAlbum),
+    CONSTRAINT FK_WhichAlbum_Title FOREIGN KEY (IdTitle) REFERENCES ALBUMS.Title(IdTitle)
+);
+
+CREATE TABLE ALBUMS.FavoriteSongs (
+    IdFavorite INT NOT NULL,
+    IdTitle INT NOT NULL,
+    FavoriteSong NCHAR(50) NULL,
+    HowManyMinutes INT NULL,
+    CONSTRAINT PK_FavoriteSongs PRIMARY KEY CLUSTERED (IdFavorite),
+    CONSTRAINT FK_FavoriteSongs_Title FOREIGN KEY (IdTitle) REFERENCES ALBUMS.Title(IdTitle)
+);
+
+CREATE TABLE ALBUMS.FirstSingle (
+    IdSingle INT NOT NULL,
+    IdTitle INT NOT NULL,
+    FirstSingle NCHAR(50) NULL,
+    CONSTRAINT PK_FirstSingle PRIMARY KEY CLUSTERED (IdSingle),
+    CONSTRAINT FK_FirstSingle_Title FOREIGN KEY (IdTitle) REFERENCES ALBUMS.Title(IdTitle)
+);
+CREATE TABLE ALBUMS.Language (
+    IdLanguage INT NOT NULL,
+    IdTitle INT NOT NULL,
+    Language NCHAR(20) NULL,
+    BritishOrAmerican NCHAR(10) NULL,
+    CONSTRAINT PK_Language PRIMARY KEY CLUSTERED (IdLanguage),
+    CONSTRAINT FK_Language_Title FOREIGN KEY (IdTitle) REFERENCES ALBUMS.Title(IdTitle)
+);
+CREATE TABLE ALBUMS.Bought (
+    IdBought INT NOT NULL,
+    IdTitle INT NOT NULL,
+    InStoreOnline NCHAR(10) NULL,
+    Price FLOAT NOT NULL,
+    Creditcardnumber NCHAR(20) NOT NULL,
+    CONSTRAINT PK_Language PRIMARY KEY CLUSTERED (IdBought),
+    CONSTRAINT FK_Bought_Title FOREIGN KEY (IdTitle) REFERENCES ALBUMS.Title(IdTitle)
+);
+GO

@@ -1,0 +1,80 @@
+SELECT CONCAT(SUBSTRING(Imie, 1, 1), '.', Nazwisko) AS OSOBA
+FROM Pracownik
+ORDER BY Nazwisko;
+
+
+SELECT Imie, Nazwisko, ap.Miejscowosc
+FROM Pracownik p
+JOIN Adres ap ON p.AdresId = ap.Id
+WHERE LEFT(ap.Miejscowosc, 1) = 'B'
+ORDER BY Imie, Nazwisko;
+
+
+
+SELECT p.Imie, p.Nazwisko, k.Nazwisko AS NazwiskoKierownika
+FROM Pracownik p
+LEFT JOIN Pracownik k ON p.KierownikId = k.Id
+WHERE p.DzialKod = 'RD1';
+
+
+
+SELECT
+    p.Imie,
+    p.Nazwisko,
+    s.NrRejestr
+FROM Pracownik p
+JOIN Samochod s ON p.SamochodId = s.Id
+WHERE p.SamochodId IS NOT NULL;
+
+
+SELECT
+    p.Nazwa AS ProjektNazwa,
+    COUNT(pp.PracownikId) AS LiczbaPracownikow
+FROM Projekt p
+JOIN Projekt_Pracownik pp ON p.Kod = pp.ProjektKod
+GROUP BY p.Kod, p.Nazwa;
+
+
+
+
+
+SELECT A.KrajKod AS KodKraju, COUNT(P.Id) AS LiczbaPracownikow
+FROM Pracownik P
+JOIN Adres A ON P.AdresId = A.Id
+GROUP BY A.KrajKod;
+
+
+
+
+
+SELECT p.Imie, p.Nazwisko, o.Nazwa AS NazwaOddzialu
+FROM Pracownik p
+LEFT JOIN Oddzial o ON p.OddzialId = o.Id
+WHERE p.SamochodId IS NULL;
+
+
+
+SELECT DISTINCT pp.ProjektKod AS KodProjektu, pk.Nazwisko AS NazwiskoKierownika
+FROM Projekt_Pracownik pp
+JOIN Pracownik pk ON pp.KierownikId = pk.Id;
+
+
+
+
+SELECT DISTINCT p.DzialKod AS KodDzialu, a.Miejscowosc AS MiejscowoscOddzialu
+FROM Pracownik p
+JOIN Oddzial o ON p.OddzialId = o.Id
+JOIN Adres a ON o.AdresId = a.Id;
+
+
+
+SELECT o.Nazwa AS NazwaOddzialu, s.Marka, s.Model, s.NrRejestr
+FROM Oddzial o
+JOIN Pracownik p ON o.Id = p.OddzialId
+JOIN Samochod s ON p.SamochodId = s.Id;
+
+
+
+
+
+

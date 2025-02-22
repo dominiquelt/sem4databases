@@ -1,0 +1,39 @@
+
+Procedura dla insert
+
+CREATE PROCEDURE InsertTitle
+    @p_AlbumTitle NCHAR(50),
+    @p_AlbumAcronym NCHAR(10)
+AS
+BEGIN
+    INSERT INTO ALBUMS.Title (AlbumTitle, AlbumAcronym)
+    VALUES (@p_AlbumTitle, @p_AlbumAcronym);
+END;
+
+
+
+Procedura dla update
+
+CREATE PROCEDURE UpdateTitle
+    @p_IdTitle INT,
+    @p_AlbumTitle NCHAR(50),
+    @p_AlbumAcronym NCHAR(10)
+AS
+BEGIN
+    UPDATE ALBUMS.Title
+    SET AlbumTitle = @p_AlbumTitle,
+        AlbumAcronym = @p_AlbumAcronym
+    WHERE IdTitle = @p_IdTitle;
+END;
+
+
+Procedura dla delete
+
+
+CREATE PROCEDURE DeleteTitle
+    @p_IdTitle INT
+AS
+BEGIN
+    DELETE FROM ALBUMS.Title
+    WHERE IdTitle = @p_IdTitle;
+END;

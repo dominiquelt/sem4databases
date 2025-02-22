@@ -1,0 +1,29 @@
+CREATE PROCEDURE DisplayTitleByAlbumTitle
+    @p_AlbumTitle NCHAR(50)
+AS
+BEGIN
+    SELECT * FROM ALBUMS.Title WHERE AlbumTitle = @p_AlbumTitle;
+END;
+
+
+CREATE PROCEDURE DisplayTitleByAlbumAcronym
+    @p_AlbumAcronym NCHAR(10)
+AS
+BEGIN
+    SELECT * FROM ALBUMS.Title WHERE AlbumAcronym = @p_AlbumAcronym;
+END;
+
+
+CREATE PROCEDURE DisplayTitleById
+    @p_IdTitle INT
+AS
+BEGIN
+    SELECT * FROM ALBUMS.Title WHERE IdTitle = @p_IdTitle;
+END;
+
+
+CREATE PROCEDURE DisplayAllTitles
+AS
+BEGIN
+    SELECT * FROM ALBUMS.Title;
+END;
